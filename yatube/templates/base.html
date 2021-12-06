@@ -18,7 +18,11 @@
     <meta name="theme-color" content="#ffffff">
     <!-- Подключен файл со стандартными стилями бустрап -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <title>{{ title }}</title>
+    <title>
+        {% block title %}
+        Посты
+        {% endblock %}
+    </title>
 </head>
 <body>
 <header>
@@ -26,7 +30,7 @@
 </header>
 <main>
     {% block content %}
-        Данные отсутствуют
+    Данные отсутствуют
     {% endblock %}
 </main>
 <footer class="border-top text-center py-3">

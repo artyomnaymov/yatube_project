@@ -145,3 +145,4 @@ dmypy.json
 
 .mypy_cache
 /yatube/db.sqlite3
+/yatube/media/

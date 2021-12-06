@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
+{% load cache %}
+{% block title %}Последние обновления на сайте{% endblock %}
 {% block content %}
-    <div class="container py-5">
-        <h1>Последние обновления на сайте</h1>
-        {% for post in posts %}
-            <article>
-                <ul>
-                    <li>Автор: {{ post.author.get_full_name }}</li>
-                    <li>Дата публикации: {{ post.pub_date|date:"d E Y" }}</li>
-                </ul>
-                <p>{{ post.text }}</p>
+    {% cache 20 index_page %}
+        <div class="container py-5">
+            <h1>Последние обновления на сайте</h1>
+            {% include 'posts/includes/switcher.html' %}
+            {% for post in page_obj %}
+                {% include 'posts/includes/post_list.html' %}
                 {% if post.group.slug %}
-                    <a href="{% url 'posts:group_list' post.group.slug %}">
-                        все записи группы
-                    </a>
+                    <a href="{% url 'posts:group_list' post.group.slug %}">все
+                        записи группы</a>
                 {% else %}
                 {% endif %}
-            </article>
-            <!-- под последним постом нет линии -->
-            {% if not forloop.last %}
-                <hr>{% endif %}
-        {% endfor %}
-    </div>
+                <!-- под последним постом нет линии -->
+                {% if not forloop.last %}
+                    <hr>
+                {% endif %}
+            {% endfor %}
+            {% include 'posts/includes/paginator.html' %}
+        </div>
+    {% endcache %}
 {% endblock %}
